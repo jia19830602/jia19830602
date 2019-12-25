@@ -1,0 +1,9 @@
+heroku ID
+APP: aii-linebot-project
+email: u511130@gmail.com
+password: a123b456c789!
+https://git.heroku.com/aii-linebot-project.git
+key: YXeGjBJc3YAcQoa2BkNl2+34VpPGczVRn76/WUGm24WV9pKB1a+ndqnF0zhLuM0Sr2lp8m1tasxeEf0XgdMLloCQCIDiR9lzPExqtbKxii/YMtPGlBp9zVUBeSbUdEwaKYUobRES+9H7P5JtNoFl6wdB04t89/1O/w1cDnyilFU=
+
+Channel ID 1653698657
+Channel secret 318797af646feaa757db0b6c6e08561c
