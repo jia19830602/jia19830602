@@ -1,13 +1,16 @@
 from flask import (Flask, render_template, request as rq, abort)
 from linebot import (LineBotApi, WebhookHandler)
 from linebot.exceptions import InvalidSignatureError
-from linebot.models import *
-
+from linebot.models import (MessageEvent, TextMessage, TextSendMessage,
+                            StickerMessage, StickerSendMessage)
 
 main_app = Flask(__name__, static_folder='.', static_url_path='')  #
 # main_app.debug = True
 line_bot_api = LineBotApi(
-		'YXeGjBJc3YAcQoa2BkNl2+34VpPGczVRn76/WUGm24WV9pKB1a+ndqnF0zhLuM0Sr2lp8m1tasxeEf0XgdMLloCQCIDiR9lzPExqtbKxii/YMtPGlBp9zVUBeSbUdEwaKYUobRES+9H7P5JtNoFl6wdB04t89/1O/w1cDnyilFU=')
+		'YXeGjBJc3YAcQoa2BkNl2+34VpPGczVRn76/WUGm24WV9pKB1a+ndqn\
+		F0zhLuM0Sr2lp8m1tasxeEf0XgdMLloCQCIDiR9lzPExqtbKxii/YMtPGl\
+		Bp9zVUBeSbUdEwaKYUobRES+9H7P5JtNoFl6wdB04t89/1O/w1cDnyilFU='
+)
 handler = WebhookHandler('0300c17210cfea52f0499e9cf80d7984')  # ?  318797af646feaa757db0b6c6e08561c
 
 
@@ -39,8 +42,8 @@ def default(event):
 def handle_messages(event):
 	msg = event.message.text(encode='utf-8')
 	line_bot_api.reply_message(
-		event.reply_token,
-		TextSendMessage(text=msg)
+			event.reply_token,
+			TextSendMessage(text=msg)
 	)
 
 
@@ -50,11 +53,10 @@ def handle_sticker_message(event):
 	p_id = event.message.package_id
 	s_id = event.message.package_id
 	line_bot_api.reply_message(
-		event.reply_token,
-		StickerSendMessage(package_id=p_id, sticker_id=s_id)
+			event.reply_token,
+			StickerSendMessage(package_id=p_id, sticker_id=s_id)
 	)
 
 
 if __name__ == "__main__":
 	main_app.run(debug=True)  # , host='127.0.0.1', port=80
-
