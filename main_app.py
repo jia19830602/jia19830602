@@ -15,7 +15,7 @@ def index():
 	return render_template('index.html')  # main_app.send_static_file
 
 
-@main_app.route('/callback', methods=["POST", "GET"])
+@main_app.route('/<callback>', methods=["POST", "GET"])
 def callback():
 	signature = rq.headers['X-Line-Signature']
 	body = rq.get_data(as_text=True)
