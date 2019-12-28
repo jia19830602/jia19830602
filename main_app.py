@@ -39,7 +39,7 @@ def default(event):
 # 基本複誦訊息
 @handler.add(MessageEvent, message=TextMessage)
 def handle_messages(event):
-	msg = event.message.text(encode='utf-8')
+	msg = event.message.text()  # encode='utf-8'
 	line_bot_api.reply_message(
 			event.reply_token,
 			TextSendMessage(text=msg)
