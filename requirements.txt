@@ -2,3 +2,4 @@ line-bot-sdk
 Flask
 gspread
 oauth2client
+gunicorn
