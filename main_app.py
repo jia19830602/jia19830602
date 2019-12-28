@@ -37,24 +37,24 @@ def default(event):
 
 
 # 基本複誦訊息
-@handler.add(MessageEvent, message=TextMessage, message=StickerMessage)
+@handler.add(MessageEvent, message=TextMessage)
 def handle_messages(event):
 	msg = event.message.text(encode='utf-8')
 	line_bot_api.reply_message(
 			event.reply_token,
 			TextSendMessage(text=msg)
 	)
+
+
+# 基本回傳貼圖
+@handler.add(MessageEvent)
+def handle_sticker_message(event):
 	p_id = event.message.package_id
 	s_id = event.message.package_id
 	line_bot_api.reply_message(
 			event.reply_token,
 			StickerSendMessage(package_id=p_id, sticker_id=s_id)
 	)
-
-# # 基本回傳貼圖
-# @handler.add(MessageEvent)
-# def handle_sticker_message(event):
-
 
 
 if __name__ == "__main__":
