@@ -38,19 +38,19 @@ def default(event):
 
 # 基本複誦訊息
 @handler.add(MessageEvent, message=TextMessage)
-def handle_messages(event):
-	msg = event.message.text(encode='utf-8')
+def handle_messages(event_msg):
+	msg = event_msg.message.text(encode='utf-8')
 	line_bot_api.reply_message(
-			event.reply_token,
+			event_msg.reply_token,
 			TextSendMessage(text=msg)
 	)
 
 
 # 基本回傳貼圖
 @handler.add(MessageEvent)
-def handle_sticker_message(event):
-	p_id = event.message.package_id
-	s_id = event.message.package_id
+def handle_sticker_message(event_sticker):
+	p_id = event_sticker.message.package_id
+	s_id = event_sticker.message.sticker_id
 	line_bot_api.reply_message(
 			event.reply_token,
 			StickerSendMessage(package_id=p_id, sticker_id=s_id)
