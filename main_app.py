@@ -40,7 +40,6 @@ def default(event):
 @handler.add(MessageEvent, message=TextMessage)
 def handle_messages(event):
 	msg = event.message.text
-	msg = msg.encode('utf-8')
 	line_bot_api.reply_message(
 			event.reply_token,
 			TextSendMessage(text=msg)
