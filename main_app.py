@@ -32,16 +32,16 @@ def callback():
 
 
 @handler.default()
-def default(event):
-	print(f'{event} event catched')
+def default(default_event):
+	print(f'{default_event } event catched')
 
 
 # 基本複誦訊息
 @handler.add(MessageEvent, message=TextMessage)
-def handle_messages(event):
-	msg = event.message.text
+def handle_messages(mgs_event):
+	msg = mgs_event.message.text
 	line_bot_api.reply_message(
-			event.reply_token,
+			mgs_event.reply_token,
 			TextSendMessage(text=msg)
 	)
 
