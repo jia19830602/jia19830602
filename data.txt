@@ -12,3 +12,6 @@ Channel secret 0300c17210cfea52f0499e9cf80d7984 #? 318797af646feaa757db0b6c6e085
 
 git
 cd d:/projects/aii_project
+heroku git:remote -a aii-linebot-project
+github
+https://github.com/sastoria/AII-linebot.git
