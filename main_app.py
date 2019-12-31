@@ -43,16 +43,21 @@ def handle_messages(mgs_event):
 
 	if (msg == 'hi') or (msg == '你好'):
 		reply = f'hello'  # greet_user {_name}
-		msg01 = TextSendMessage(reply)  # greet_msg
-		line_bot_api.reply_message(
-				mgs_event.reply_token,
-				TextSendMessage(msg01)
-		)
+
 	else:
-		line_bot_api.reply_message(
-				mgs_event.reply_token,
-				TextSendMessage(text=msg)
-		)
+		reply = msg
+
+	msg = TextSendMessage(reply)
+	line_bot_api.reply_message(
+			mgs_event.reply_token,
+			TextSendMessage(text=msg)
+	)
+
+
+		# line_bot_api.reply_message(
+		# 		mgs_event.reply_token,
+		# 		TextSendMessage(text=msg)
+		# )
 
 		# def reply_model(text):             # 嘗試 函式化
 		# 	line_bot_api.reply_message(
