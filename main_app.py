@@ -2,11 +2,6 @@ from flask import (Flask, render_template, request as rq, abort)
 from linebot import (LineBotApi, WebhookHandler)
 from linebot.exceptions import InvalidSignatureError
 from linebot.models import *
-import config
-from os import getenv
-from dotenv import load_dotenv
-
-load_dotenv()
 
 
 main_app = Flask(__name__, static_folder='.', static_url_path='')  #
