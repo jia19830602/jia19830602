@@ -33,6 +33,20 @@ def default(default_event):
 	print(f'{default_event} event catched')
 
 
+@handler.add(FollowEvent)
+def followed(follow_event):
+	_id = follow_event.source.user_id
+	profile = line_bot_api.get_profile(_id)
+	_name = profile.display_name
+
+	follow_greet = f"It's good to meet you, my dear {_name}! "
+	reply_msg = TextSendMessage(text=follow_greet)
+	line_bot_api.reply_message(
+			FollowEvent.reply_token,
+			reply_msg
+	)
+
+
 # 基本複誦訊息
 @handler.add(MessageEvent, message=TextMessage)
 def handle_messages(mgs_event):
@@ -44,7 +58,7 @@ def handle_messages(mgs_event):
 	greet_list = ['你好', 'hi', 'Hi', 'HI', 'HEY', '嗨']
 
 	if user_msg in greet_list:
-		greet_user = f'hello {_name} \n your profile:{profile} \n ID: {_id }'
+		greet_user = f'Hello! {_name} '
 		reply = greet_user
 
 	else:
