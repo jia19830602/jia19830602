@@ -44,7 +44,7 @@ def handle_messages(mgs_event):
 	greet_list = ['你好', 'hi', 'Hi', 'HI', 'HEY', '嗨']
 
 	if user_msg in greet_list:
-		greet_user = f'hello{_name}'
+		greet_user = f'hello {_name} \n your profile:{profile} \n ID: {_id }'
 		reply = greet_user
 
 	else:
