@@ -3,12 +3,16 @@ from linebot import (LineBotApi, WebhookHandler)
 from linebot.exceptions import InvalidSignatureError
 from linebot.models import *
 import config
+from os import getenv
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
 main_app = Flask(__name__, static_folder='.', static_url_path='')  #
 # main_app.debug = True
-line_bot_api = LineBotApi(config.CHANNEL_ACCESS_TOKEN)
-handler = WebhookHandler(config.CHANNEL_SECRET)  # ?  318797af646feaa757db0b6c6e08561c
+line_bot_api = LineBotApi(getenv('CHANNEL_ACCESS_TOKEN'))
+handler = WebhookHandler(getenv('CHANNEL_SECRET'))  # ?  318797af646feaa757db0b6c6e08561c
 
 
 # Homepage
