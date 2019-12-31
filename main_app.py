@@ -40,14 +40,25 @@ def handle_messages(mgs_event):
 	profile = line_bot_api.get_profile(_id)  # get personal info
 	_name = profile.display_name  # storage info
 
-	msg = mgs_event.message.text
+	msg = mgs_event.message.text  # read text which user passed in
 	line_bot_api.reply_message(
 			mgs_event.reply_token,
 			TextSendMessage(text=msg)
 	)
 
-	if msg == 'hi' or '你好':
-		msg == f'hello{_name}'
+	if (msg == 'hi') or (msg == '你好'):
+		greet_user = f'hello{_name}'
+		greet_msg = TextSendMessage(greet_user)
+		line_bot_api.reply_message(
+				mgs_event.reply_token,
+				TextSendMessage(text=greet_msg)
+		)
+
+		# def reply_model(text):             # 嘗試 函式化
+		# 	line_bot_api.reply_message(
+		# 	mgs_event.reply_token,
+		# 	TextSendMessage(text=greet_msg)
+		# )
 
 
 # 基本回傳貼圖
