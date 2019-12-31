@@ -36,11 +36,18 @@ def default(default_event):
 # 基本複誦訊息
 @handler.add(MessageEvent, message=TextMessage)
 def handle_messages(mgs_event):
+	_id = mgs_event.source.user_id  # get user ID unicode
+	profile = line_bot_api.get_profile(_id)  # get personal info
+	_name = profile.display_name  # storage info
+
 	msg = mgs_event.message.text
 	line_bot_api.reply_message(
 			mgs_event.reply_token,
 			TextSendMessage(text=msg)
 	)
+
+	if msg == 'hi' or '你好':
+		msg == f'hello{_name}'
 
 
 # 基本回傳貼圖
