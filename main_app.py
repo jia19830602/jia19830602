@@ -42,11 +42,11 @@ def handle_messages(mgs_event):
 	msg = mgs_event.message.text  # read text which user passed in
 
 	if (msg == 'hi') or (msg == '你好'):
-		greet_user = f'hello{_name}'
-		greet_msg = TextSendMessage(greet_user)
+		reply = f'hello{_name}'  # greet_user
+		msg01 = TextSendMessage(reply)  # greet_msg
 		line_bot_api.reply_message(
 				mgs_event.reply_token,
-				TextSendMessage(text=greet_msg)
+				TextSendMessage(msg01)
 		)
 	else:
 		line_bot_api.reply_message(
