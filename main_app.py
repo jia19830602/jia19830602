@@ -42,7 +42,7 @@ def followed(follow_event):
 	follow_greet = f"It's good to meet you, my dear {_name}! "
 	reply_msg = TextSendMessage(text=follow_greet)
 	line_bot_api.reply_message(
-			FollowEvent.reply_token,
+			follow_event.reply_token,
 			reply_msg
 	)
 
