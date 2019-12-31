@@ -3,8 +3,8 @@ from os import getenv
 
 from dotenv import load_dotenv
 
-env_path = Path('.') / '.env'
-load_dotenv(dotenv_path=env_path)
+
+load_dotenv()
 
 
 CHANNEL_ID = getenv('CHANNEL_ID')
