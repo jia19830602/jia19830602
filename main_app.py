@@ -41,7 +41,9 @@ def handle_messages(mgs_event):
 	_name = profile.display_name  # storage info
 	user_msg = mgs_event.message.text  # read text which user passed in
 
-	if (user_msg == 'hi') or (user_msg == '你好'):
+	greet_list = ['你好', 'hi', 'Hi', 'HI', 'HEY', '嗨']
+
+	if user_msg in greet_list:
 		greet_user = f'hello{_name}'
 		reply = greet_user
 
@@ -51,7 +53,7 @@ def handle_messages(mgs_event):
 	reply_msg = TextSendMessage(text=reply)
 	line_bot_api.reply_message(
 			mgs_event.reply_token,
-			reply_msg 
+			reply_msg
 	)
 
 
