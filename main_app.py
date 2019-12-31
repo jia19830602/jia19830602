@@ -39,12 +39,7 @@ def handle_messages(mgs_event):
 	_id = mgs_event.source.user_id  # get user ID unicode
 	profile = line_bot_api.get_profile(_id)  # get personal info
 	_name = profile.display_name  # storage info
-
 	msg = mgs_event.message.text  # read text which user passed in
-	line_bot_api.reply_message(
-			mgs_event.reply_token,
-			TextSendMessage(text=msg)
-	)
 
 	if (msg == 'hi') or (msg == '你好'):
 		greet_user = f'hello{_name}'
@@ -52,6 +47,11 @@ def handle_messages(mgs_event):
 		line_bot_api.reply_message(
 				mgs_event.reply_token,
 				TextSendMessage(text=greet_msg)
+		)
+	else:
+		line_bot_api.reply_message(
+				mgs_event.reply_token,
+				TextSendMessage(text=msg)
 		)
 
 		# def reply_model(text):             # 嘗試 函式化
