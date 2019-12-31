@@ -8,6 +8,7 @@
       <w>dotenv</w>
       <w>exqtb</w>
       <w>feaa</w>
+      <w>getenv</w>
       <w>gspread</w>
       <w>gunicorn</w>
       <w>heroku</w>
