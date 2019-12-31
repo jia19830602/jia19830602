@@ -2,15 +2,13 @@ from flask import (Flask, render_template, request as rq, abort)
 from linebot import (LineBotApi, WebhookHandler)
 from linebot.exceptions import InvalidSignatureError
 from linebot.models import *
+import config
+
 
 main_app = Flask(__name__, static_folder='.', static_url_path='')  #
 # main_app.debug = True
-line_bot_api = LineBotApi(
-		'YXeGjBJc3YAcQoa2BkNl2+34VpPGczVRn76/WUGm24WV9pKB1a+ndqn\
-		F0zhLuM0Sr2lp8m1tasxeEf0XgdMLloCQCIDiR9lzPExqtbKxii/YMtPGl\
-		Bp9zVUBeSbUdEwaKYUobRES+9H7P5JtNoFl6wdB04t89/1O/w1cDnyilFU='
-)
-handler = WebhookHandler('0300c17210cfea52f0499e9cf80d7984')  # ?  318797af646feaa757db0b6c6e08561c
+line_bot_api = LineBotApi(config.CHANNEL_ACCESS_TOKEN)
+handler = WebhookHandler(config.CHANNEL_SECRET)  # ?  318797af646feaa757db0b6c6e08561c
 
 
 # Homepage

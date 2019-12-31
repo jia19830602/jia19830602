@@ -1,3 +1,4 @@
+python-dotenv
 line-bot-sdk
 Flask
 gspread
