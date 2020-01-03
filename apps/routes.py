@@ -1,19 +1,19 @@
-from flask import (Flask, render_template, request as rq, abort)
+from flask import (render_template, request as rq, abort)
+from apps import main_app
+from apps import config
 from linebot import (LineBotApi, WebhookHandler)
 from linebot.exceptions import InvalidSignatureError
 from linebot.models import *
-import config
 
-main_app = Flask(__name__, static_folder='.', static_url_path='')  #
-# main_app.debug = True
+
 line_bot_api = LineBotApi(config.CHANNEL_ACCESS_TOKEN)  #
-handler = WebhookHandler(config.CHANNEL_SECRET)  # ?  318797af646feaa757db0b6c6e08561c getenv('CHANNEL_SECRET')
+handler = WebhookHandler(config.CHANNEL_SECRET)  #
 
 
 # Homepage
-@main_app.route('/', methods=["POST"])  # , "GET"
+@main_app.route('/', methods=["POST", "GET"])  #
 def index():
-	return render_template('index.html')  # main_app.send_static_file
+	return render_template('index.html')  # apps.send_static_file
 
 
 @main_app.route('/callback', methods=["POST"])  # , "GET"
@@ -35,7 +35,7 @@ def default(default_event):
 
 @handler.add(FollowEvent)  # catch FollowEvent
 def followed(follow_event):
-	_id = follow_event.source.user_id  # get user ID unicode
+	_id = follow_event.source.user_id  # get user ID
 	profile = line_bot_api.get_profile(_id)  # get personal info
 	_name = profile.display_name  # storage user display name
 
@@ -47,10 +47,10 @@ def followed(follow_event):
 	)
 
 
-# 基本複誦訊息
+# 基本複誦訊息&關鍵字打招呼
 @handler.add(MessageEvent, message=TextMessage)
 def handle_messages(mgs_event):
-	_id = mgs_event.source.user_id  # get user ID unicode
+	_id = mgs_event.source.user_id  # get user ID
 	profile = line_bot_api.get_profile(_id)  # get personal info
 	_name = profile.display_name  # storage user display name
 	user_msg = mgs_event.message.text  # read text which user passed in
@@ -82,5 +82,4 @@ def handle_sticker_message(event_sticker):
 	)
 
 
-if __name__ == "__main__":
-	main_app.run()  # debug=True, host='127.0.0.1', port=80
+

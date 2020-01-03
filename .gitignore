@@ -1,4 +1,4 @@
 data.txt
 __pycache__
-.env
+apps/.env
 .idea/

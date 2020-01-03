@@ -1,7 +1,9 @@
-python-dotenv
 line-bot-sdk
 Flask
+flask_sqlalchemy
+flask_cors
 gspread
 oauth2client
 gunicorn
 pathlib
+python-dotenv
