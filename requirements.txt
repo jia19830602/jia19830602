@@ -2,6 +2,7 @@ line-bot-sdk
 Flask
 flask_sqlalchemy
 flask_cors
+flask_restful
 pymysql
 gspread
 oauth2client
