@@ -17,4 +17,4 @@ from datetime import datetime
 #         line_db.String(10), nullable=False)
 #     insert_time = line_db.Column(line_db.DateTime, default=datetime.now)
 #     update_time = line_db.Column(
-#         line_db.DateTime, onupdate=datetime.now, default=datetime.now)
+#         line_db.DateTime, onupdate=datetime.now, default=datetime.now)'

@@ -1,23 +1,23 @@
 from flask import (render_template, request as rq, abort)
 from apps import main_app
-from apps import configs
 from linebot import (LineBotApi, WebhookHandler)
 from linebot.exceptions import InvalidSignatureError
 from linebot.models import *
-import requests
 from bs4 import BeautifulSoup
+import requests
+import configs
 
 line_bot_api = LineBotApi(configs.CHANNEL_ACCESS_TOKEN)  #
 handler = WebhookHandler(configs.CHANNEL_SECRET)  #
 
 
 # Homepage
-@main_app.route('/', methods=["POST", "GET"])  #
+@main_app.route('/', methods=["POST", "GET"])  # endpoint=''
 def index():
 	return render_template('index.html')  # apps.send_static_file
 
 
-@main_app.route('/callback', methods=["POST"])  # , "GET"
+@main_app.route('/callback', methods=["POST", "GET"])  # , "GET"
 def callback():
 	signature = rq.headers['X-Line-Signature']
 	body = rq.get_data(as_text=True)
@@ -95,8 +95,8 @@ def find_tech_news(mgs_event):
 		soup = BeautifulSoup(res.text, 'html.parser')
 		_content = ""
 
-		for _index, data in enumerate(soup.select('article div h1.entry-title a')):
-			if _index == 12:
+		for aa, data in enumerate(soup.select('article div h1.entry-title a')):
+			if aa == 12:
 				return _content
 			title = data.text
 			link = data['href']
