@@ -1,13 +1,14 @@
 from flask import (render_template, request as rq, abort)
 from apps import main_app
-from apps import config
+from apps import configs
 from linebot import (LineBotApi, WebhookHandler)
 from linebot.exceptions import InvalidSignatureError
 from linebot.models import *
+import requests
+from bs4 import BeautifulSoup
 
-
-line_bot_api = LineBotApi(config.CHANNEL_ACCESS_TOKEN)  #
-handler = WebhookHandler(config.CHANNEL_SECRET)  #
+line_bot_api = LineBotApi(configs.CHANNEL_ACCESS_TOKEN)  #
+handler = WebhookHandler(configs.CHANNEL_SECRET)  #
 
 
 # Homepage
@@ -55,9 +56,9 @@ def handle_messages(mgs_event):
 	_name = profile.display_name  # storage user display name
 	user_msg = mgs_event.message.text  # read text which user passed in
 
-	greet_list = ['你好', '嗨', '哈囉', 'hi', 'Hi', 'HI', 'HEY', 'hey', 'Hey']
+	greet_list = ['你好', '嗨', '哈囉', 'hi', 'hey']
 
-	if user_msg in greet_list:
+	if user_msg.lower() in greet_list:
 		greet_user = f'Hello! {_name} '
 		reply = greet_user
 
@@ -82,4 +83,31 @@ def handle_sticker_message(event_sticker):
 	)
 
 
+@handler.add(MessageEvent, message=TextMessage)
+def find_tech_news(mgs_event):
 
+	def tech_news():
+		target_url = 'https://technews.tw/'
+		print('Start parsing movie ...')
+		rs = requests.session()
+		res = rs.get(target_url, verify=False)
+		res.encoding = 'utf-8'
+		soup = BeautifulSoup(res.text, 'html.parser')
+		_content = ""
+
+		for _index, data in enumerate(soup.select('article div h1.entry-title a')):
+			if _index == 12:
+				return _content
+			title = data.text
+			link = data['href']
+			_content += '{}\n{}\n\n'.format(title, link)
+		return _content
+
+	user_msg = mgs_event.message.text
+
+	if user_msg == "科技":
+		content = tech_news()
+		line_bot_api.reply_message(
+				mgs_event.reply_token,
+				TextSendMessage(text=content)
+		)

@@ -2,8 +2,11 @@ line-bot-sdk
 Flask
 flask_sqlalchemy
 flask_cors
+pymysql
 gspread
 oauth2client
 gunicorn
 pathlib
 python-dotenv
+beautifulsoup4
+requests
