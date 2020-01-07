@@ -92,19 +92,20 @@ def find_news(mgs_event):
 		rs = requests.session()
 		res = rs.get(target_url, verify=False)
 		soup = BeautifulSoup(res.text, 'html.parser')
-		content = ""
-		for index, data in enumerate(soup.select('.rtddt a'), 0):
-			if index == 5:
-				return content
+		_content = ""
+		for _index, data in enumerate(soup.select('.rtddt a'), 0):
+			if _index == 5:
+				return _content
 			link = data['href']
-			content += '{}\n\n'.format(link)
-		return content
+			_content += '{}\n\n'.format(link)
+		return _content
 
 	if user_msg == "蘋果新聞":
 		content = apple_news()
 		line_bot_api.reply_message(
 				mgs_event.reply_token,
 				TextSendMessage(text=content)
+		)
 
 
 # 基本回傳貼圖
