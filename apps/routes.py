@@ -86,6 +86,26 @@ def find_news(mgs_event):
 				TextSendMessage(text=content)
 		)
 
+	def apple_news():
+		target_url = 'https://tw.appledaily.com/new/realtime'
+		print('Start parsing appleNews....')
+		rs = requests.session()
+		res = rs.get(target_url, verify=False)
+		soup = BeautifulSoup(res.text, 'html.parser')
+		content = ""
+		for index, data in enumerate(soup.select('.rtddt a'), 0):
+			if index == 5:
+				return content
+			link = data['href']
+			content += '{}\n\n'.format(link)
+		return content
+
+	if user_msg == "蘋果新聞":
+		content = apple_news()
+		line_bot_api.reply_message(
+				mgs_event.reply_token,
+				TextSendMessage(text=content)
+
 
 # 基本回傳貼圖
 @handler.add(MessageEvent)
