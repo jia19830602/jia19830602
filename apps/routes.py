@@ -50,33 +50,33 @@ def handle_sticker_message(sticker_event):
 
 
 @handler.add(MessageEvent, message=TextMessage)
-def find_news(mgs_event):
-
-	def tech_news():
-		target_url = 'https://technews.tw/'
-		print('Start parsing movie ...')
-		rs = requests.session()
-		res = rs.get(target_url, verify=False)
-		res.encoding = 'utf-8'
-		soup = BeautifulSoup(res.text, 'html.parser')
-		_content = ""
-
-		for aa, data in enumerate(soup.select('article div h1.entry-title a')):
-			if aa == 12:
-				return _content
-			title = data.text
-			link = data['href']
-			_content += '{}\n{}\n\n'.format(title, link)
-		return _content
-
-	user_msg = mgs_event.message.text
-
-	if user_msg == "新聞":
-		content = tech_news()
-		line_bot_api.reply_message(
-				mgs_event.reply_token,
-				TextSendMessage(text=content)
-		)
+# def find_news(mgs_event):
+#
+# 	def tech_news():
+# 		target_url = 'https://technews.tw/'
+# 		print('Start parsing movie ...')
+# 		rs = requests.session()
+# 		res = rs.get(target_url, verify=False)
+# 		res.encoding = 'utf-8'
+# 		soup = BeautifulSoup(res.text, 'html.parser')
+# 		_content = ""
+#
+# 		for _index, data in enumerate(soup.select('article div h1.entry-title a')):
+# 			if _index == 12:
+# 				return _content
+# 			title = data.text
+# 			link = data['href']
+# 			_content += '{}\n{}\n\n'.format(title, link)
+# 		return _content
+#
+# 	user_msg = mgs_event.message.text
+#
+# 	if user_msg == "新聞":
+# 		content = tech_news()
+# 		line_bot_api.reply_message(
+# 				mgs_event.reply_token,
+# 				TextSendMessage(text=content)
+# 		)
 
 
 def handle_messages(mgs_event2):
