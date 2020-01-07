@@ -79,24 +79,24 @@ def find_news(mgs_event):
 		)
 
 
-def handle_messages(mgs_event):
-	_id = mgs_event.source.user_id  # get user ID
+def handle_messages(mgs_event2):
+	_id = mgs_event2.source.user_id  # get user ID
 	profile = line_bot_api.get_profile(_id)  # get personal info
 	_name = profile.display_name  # storage user display name
-	user_msg = mgs_event.message.text  # read text which user passed in
+	user_msg2 = mgs_event2.message.text  # read text which user passed in
 
 	greet_list = ['你好', '嗨', '哈囉', 'hi', 'hey']
 
-	if user_msg in greet_list:
+	if user_msg2 in greet_list:
 		greet_user = f'Hello! {_name} '
 		reply = greet_user
 
 	else:
-		reply = user_msg
+		reply = user_msg2
 
 	reply_msg = TextSendMessage(text=reply)
 	line_bot_api.reply_message(
-			mgs_event.reply_token,
+			mgs_event2.reply_token,
 			reply_msg
 	)
 
