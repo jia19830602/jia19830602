@@ -58,7 +58,7 @@ def handle_messages(mgs_event):
 
 	greet_list = ['你好', '嗨', '哈囉', 'hi', 'hey']
 
-	if user_msg.lower() in greet_list:
+	if user_msg in greet_list:
 		greet_user = f'Hello! {_name} '
 		reply = greet_user
 
