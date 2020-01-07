@@ -34,20 +34,6 @@ def default(default_event):
 	print(f'{default_event} event catched')
 
 
-@handler.add(FollowEvent)  # catch FollowEvent
-def followed(follow_event):
-	_id = follow_event.source.user_id  # get user ID
-	profile = line_bot_api.get_profile(_id)  # get personal info
-	_name = profile.display_name  # storage user display name
-
-	follow_greet = f"It's good to meet you, my dear {_name}! "
-	reply_msg = TextSendMessage(text=follow_greet)
-	line_bot_api.reply_message(
-			follow_event.reply_token,
-			reply_msg
-	)
-
-
 # 基本複誦訊息&關鍵字打招呼
 @handler.add(MessageEvent, message=TextMessage)
 def handle_messages(mgs_event):
@@ -74,17 +60,17 @@ def handle_messages(mgs_event):
 
 # 基本回傳貼圖
 @handler.add(MessageEvent)
-def handle_sticker_message(event_sticker):
-	p_id = event_sticker.message.package_id
-	s_id = event_sticker.message.sticker_id
+def handle_sticker_message(sticker_event):
+	p_id = sticker_event.message.package_id
+	s_id = sticker_event.message.sticker_id
 	line_bot_api.reply_message(
-			event_sticker.reply_token,
+			sticker_event.reply_token,
 			StickerSendMessage(package_id=p_id, sticker_id=s_id)
 	)
 
 
 @handler.add(MessageEvent, message=TextMessage)
-def find_tech_news(mgs_event):
+def find_news(mgs_event):
 
 	def tech_news():
 		target_url = 'https://technews.tw/'
@@ -105,9 +91,23 @@ def find_tech_news(mgs_event):
 
 	user_msg = mgs_event.message.text
 
-	if user_msg == "科技":
+	if user_msg == "新聞":
 		content = tech_news()
 		line_bot_api.reply_message(
 				mgs_event.reply_token,
 				TextSendMessage(text=content)
 		)
+
+
+# @handler.add(FollowEvent)  # catch FollowEvent
+# def followed(follow_event):
+# 	_id = follow_event.source.user_id  # get user ID
+# 	profile = line_bot_api.get_profile(_id)  # get personal info
+# 	_name = profile.display_name  # storage user display name
+#
+# 	follow_greet = f"It's good to meet you, my dear {_name}! "
+# 	reply_msg = TextSendMessage(text=follow_greet)
+# 	line_bot_api.reply_message(
+# 			follow_event.reply_token,
+# 			reply_msg
+# 	)
