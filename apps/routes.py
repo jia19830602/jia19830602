@@ -45,9 +45,18 @@ def handle_messages(mgs_event):
 	user_msg = mgs_event.message.text  # read text which user passed in
 	reply = mgs_event.reply_token
 
+	def reply_messages():
+		greet_list = ['嗨', '你好', '哈囉', 'hi', 'hey', 'hello']
+		if user_msg.lower() in greet_list:
+			greet_user = f' Hello~ {_name} !'
+			_reply = greet_user
+
+		else:
+			_reply = user_msg
+		return _reply
+
 	def tech_news():
 		target_url = 'https://technews.tw/'
-		print('Start parsing movie ...')
 		rs = requests.session()
 		res = rs.get(target_url, verify=False)
 		res.encoding = 'utf-8'
@@ -55,20 +64,15 @@ def handle_messages(mgs_event):
 		_content = ""
 
 		for _index, data in enumerate(soup.select('article div h1.entry-title a')):
-			if _index == 12:
+			if _index == 5:
 				return _content
 			title = data.text
 			link = data['href']
 			_content += '{}\n{}\n\n'.format(title, link)
 		return _content
 
-	if user_msg == "新聞":
-		content = tech_news()
-		line_bot_api.reply_message(reply, TextSendMessage(text=content))
-
 	def apple_news():
 		target_url = 'https://tw.appledaily.com/new/realtime'
-		print('Start parsing appleNews....')
 		rs = requests.session()
 		res = rs.get(target_url, verify=False)
 		soup = BeautifulSoup(res.text, 'html.parser')
@@ -80,19 +84,13 @@ def handle_messages(mgs_event):
 			_content += '{}\n\n'.format(link)
 		return _content
 
+	if user_msg == "新聞":
+		content = tech_news()
+		line_bot_api.reply_message(reply, TextSendMessage(text=content))
+
 	if user_msg == "蘋果新聞":
 		apple = apple_news()
 		line_bot_api.reply_message(reply, TextSendMessage(text=apple))
-
-	def reply_messages():
-		greet_list = ['你好', '嗨', '哈囉', 'hi', 'hey', 'hello']
-		if user_msg.lower() in greet_list:
-			greet_user = f'Hello! {_name} '
-			_reply = greet_user
-
-		else:
-			_reply = user_msg
-		return _reply
 
 	msg = reply_messages()
 	line_bot_api.reply_message(reply, TextSendMessage(text=msg))
@@ -109,15 +107,13 @@ def handle_sticker_message(sticker_event):
 	)
 
 
-@handler.add(FollowEvent)  # catch FollowEvent
+@handler.add(FollowEvent)  # catch FollowEvents
 def followed(follow_event):
 	_id = follow_event.source.user_id  # get user ID
 	profile = line_bot_api.get_profile(_id)  # get personal info
 	_name = profile.display_name  # storage user display name
 
-	follow_greet = f"It's good to meet you, my dear {_name}! "
-	reply_msg = TextSendMessage(text=follow_greet)
+	greet = f"It's good to meet you, my dear {_name}! "
 	line_bot_api.reply_message(
-			follow_event.reply_token,
-			reply_msg
+		follow_event.reply_token, TextSendMessage(text=greet)
 	)
