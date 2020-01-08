@@ -81,11 +81,11 @@ def handle_messages(mgs_event):
 		return _content
 
 	if user_msg == "蘋果新聞":
-		content = apple_news()
-		line_bot_api.reply_message(reply, TextSendMessage(text=content))
+		apple = apple_news()
+		line_bot_api.reply_message(reply, TextSendMessage(text=apple))
 
 	def reply_messages():
-		greet_list = ['你好', '嗨', '哈囉', 'hi', 'hey']
+		greet_list = ['你好', '嗨', '哈囉', 'hi', 'hey', 'hello']
 		if user_msg.lower() in greet_list:
 			greet_user = f'Hello! {_name} '
 			_reply = greet_user
@@ -94,8 +94,8 @@ def handle_messages(mgs_event):
 			_reply = user_msg
 		return _reply
 
-	content = reply_messages()
-	line_bot_api.reply_message(reply, TextSendMessage(text=content))
+	msg = reply_messages()
+	line_bot_api.reply_message(reply, TextSendMessage(text=msg))
 
 
 # 基本回傳貼圖
