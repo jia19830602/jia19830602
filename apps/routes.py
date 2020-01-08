@@ -37,8 +37,13 @@ def default(default_event):
 # 基本複誦訊息&關鍵字打招呼
 
 @handler.add(MessageEvent, message=TextMessage)
-def find_news(mgs_event):
-	user_msg = mgs_event.message.text
+def handle_messages(mgs_event):
+
+	_id = mgs_event.source.user_id  # get user ID
+	profile = line_bot_api.get_profile(_id)  # get personal info
+	_name = profile.display_name  # storage user display name
+	user_msg = mgs_event.message.text  # read text which user passed in
+	reply = mgs_event.reply_token
 
 	def tech_news():
 		target_url = 'https://technews.tw/'
@@ -59,10 +64,7 @@ def find_news(mgs_event):
 
 	if user_msg == "新聞":
 		content = tech_news()
-		line_bot_api.reply_message(
-				mgs_event.reply_token,
-				TextSendMessage(text=content)
-		)
+		line_bot_api.reply_message(reply, TextSendMessage(text=content))
 
 	def apple_news():
 		target_url = 'https://tw.appledaily.com/new/realtime'
@@ -80,33 +82,20 @@ def find_news(mgs_event):
 
 	if user_msg == "蘋果新聞":
 		content = apple_news()
-		line_bot_api.reply_message(
-				mgs_event.reply_token,
-				TextSendMessage(text=content)
-		)
+		line_bot_api.reply_message(reply, TextSendMessage(text=content))
 
+	def reply_messages():
+		greet_list = ['你好', '嗨', '哈囉', 'hi', 'hey']
+		if user_msg in greet_list:
+			greet_user = f'Hello! {_name} '
+			_reply = greet_user
 
-@handler.add(MessageEvent, message=TextMessage)
-def handle_messages(mgs_event):
-	_id = mgs_event.source.user_id  # get user ID
-	profile = line_bot_api.get_profile(_id)  # get personal info
-	_name = profile.display_name  # storage user display name
-	user_msg = mgs_event.message.text  # read text which user passed in
+		else:
+			_reply = user_msg
+		return _reply
 
-	greet_list = ['你好', '嗨', '哈囉', 'hi', 'hey']
-
-	if user_msg in greet_list:
-		greet_user = f'Hello! {_name} '
-		reply = greet_user
-
-	else:
-		reply = user_msg
-
-	reply_msg = TextSendMessage(text=reply)
-	line_bot_api.reply_message(
-			mgs_event.reply_token,
-			reply_msg
-	)
+	content = reply_messages()
+	line_bot_api.reply_message(reply, TextSendMessage(text=content))
 
 
 # 基本回傳貼圖
