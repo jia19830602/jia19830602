@@ -35,28 +35,6 @@ def default(default_event):
 
 
 # 基本複誦訊息&關鍵字打招呼
-@handler.add(MessageEvent, message=TextMessage)
-def handle_messages(mgs_event):
-	_id = mgs_event.source.user_id  # get user ID
-	profile = line_bot_api.get_profile(_id)  # get personal info
-	_name = profile.display_name  # storage user display name
-	user_msg = mgs_event.message.text  # read text which user passed in
-
-	greet_list = ['你好', '嗨', '哈囉', 'hi', 'hey']
-
-	if user_msg in greet_list:
-		greet_user = f'Hello! {_name} '
-		reply = greet_user
-
-	else:
-		reply = user_msg
-
-	reply_msg = TextSendMessage(text=reply)
-	line_bot_api.reply_message(
-			mgs_event.reply_token,
-			reply_msg
-	)
-
 
 @handler.add(MessageEvent, message=TextMessage)
 def find_news(mgs_event):
@@ -108,6 +86,29 @@ def find_news(mgs_event):
 		)
 
 
+@handler.add(MessageEvent, message=TextMessage)
+def handle_messages(mgs_event):
+	_id = mgs_event.source.user_id  # get user ID
+	profile = line_bot_api.get_profile(_id)  # get personal info
+	_name = profile.display_name  # storage user display name
+	user_msg = mgs_event.message.text  # read text which user passed in
+
+	greet_list = ['你好', '嗨', '哈囉', 'hi', 'hey']
+
+	if user_msg in greet_list:
+		greet_user = f'Hello! {_name} '
+		reply = greet_user
+
+	else:
+		reply = user_msg
+
+	reply_msg = TextSendMessage(text=reply)
+	line_bot_api.reply_message(
+			mgs_event.reply_token,
+			reply_msg
+	)
+
+
 # 基本回傳貼圖
 @handler.add(MessageEvent)
 def handle_sticker_message(sticker_event):
@@ -119,15 +120,15 @@ def handle_sticker_message(sticker_event):
 	)
 
 
-# @handler.add(FollowEvent)  # catch FollowEvent
-# def followed(follow_event):
-# 	_id = follow_event.source.user_id  # get user ID
-# 	profile = line_bot_api.get_profile(_id)  # get personal info
-# 	_name = profile.display_name  # storage user display name
-#
-# 	follow_greet = f"It's good to meet you, my dear {_name}! "
-# 	reply_msg = TextSendMessage(text=follow_greet)
-# 	line_bot_api.reply_message(
-# 			follow_event.reply_token,
-# 			reply_msg
-# 	)
+@handler.add(FollowEvent)  # catch FollowEvent
+def followed(follow_event):
+	_id = follow_event.source.user_id  # get user ID
+	profile = line_bot_api.get_profile(_id)  # get personal info
+	_name = profile.display_name  # storage user display name
+
+	follow_greet = f"It's good to meet you, my dear {_name}! "
+	reply_msg = TextSendMessage(text=follow_greet)
+	line_bot_api.reply_message(
+			follow_event.reply_token,
+			reply_msg
+	)
