@@ -92,14 +92,10 @@ def handle_messages(mgs_event):
 		line_bot_api.reply_message(reply, TextSendMessage(text=apple))
 
 	msg = reply_messages()
-	# line_bot_api.reply_message(reply, TextSendMessage(text=msg))
 	line_bot_api.reply_message(
 			reply,
 			[
-				TextSendMessage(text='我現在複誦你的訊息'),
-				TextSendMessage(text='我現在複誦你的訊息'),
-				TextSendMessage(text='我現在複誦你的訊息'),
-				TextSendMessage(text='我現在複誦你的訊息'),
+				TextSendMessage(text='現在複誦您的訊息'),
 				TextSendMessage(text=msg)
 			]
 	)

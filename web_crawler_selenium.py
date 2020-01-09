@@ -5,10 +5,10 @@ import requests
 import datetime
 import time
 
-model_id = mgs_event.message.text
-model_id = model_id.replace("%", "")
+search_item = mgs_event.message.text
+search_item = search_item.replace("%", "")
 
-url = f'https://www.letao.com.tw/yahoojp/auctions/history.php?category=0&p={model_id}&seller='
+url = f'https://www.letao.com.tw/yahoojp/auctions/history.php?category=0&p={search_item}&seller='
 
 driver_path = r'D:\Google\Chrome\Application\chromedriver.exe'
 driver = webdriver.Chrome(driver_path)
