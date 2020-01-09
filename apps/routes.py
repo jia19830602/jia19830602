@@ -100,7 +100,6 @@ def handle_messages(mgs_event):
 				TextSendMessage(text='我現在複誦你的訊息'),
 				TextSendMessage(text='我現在複誦你的訊息'),
 				TextSendMessage(text='我現在複誦你的訊息'),
-				TextSendMessage(text='我現在複誦你的訊息'),
 				TextSendMessage(text=msg)
 			]
 	)
