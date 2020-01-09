@@ -94,6 +94,8 @@ def handle_messages(mgs_event):
 
 	msg = reply_messages()
 	line_bot_api.reply_message(reply, TextSendMessage(text=msg))
+	line_bot_api.reply_message(reply, TextSendMessage(text=msg))
+	line_bot_api.reply_message(reply, TextSendMessage(text=msg))
 
 
 # 基本回傳貼圖
