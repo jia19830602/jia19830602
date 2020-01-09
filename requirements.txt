@@ -14,4 +14,3 @@ gunicorn
 gspread
 pandas
 datetime
-time
