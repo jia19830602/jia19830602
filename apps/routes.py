@@ -93,10 +93,8 @@ def handle_messages(mgs_event):
 		line_bot_api.reply_message(reply, TextSendMessage(text=apple))
 
 	msg = reply_messages()
-	line_bot_api.reply_message(reply, TextSendMessage(text=msg))
-	line_bot_api.reply_message(reply, TextSendMessage(text=msg))
-	line_bot_api.reply_message(reply, TextSendMessage(text=msg))
-
+	# line_bot_api.reply_message(reply, TextSendMessage(text=msg))
+	line_bot_api.reply_message(reply, [TextSendMessage(text=msg), TextSendMessage(text=msg)])
 
 # 基本回傳貼圖
 @handler.add(MessageEvent)
