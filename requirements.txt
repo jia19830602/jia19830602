@@ -11,3 +11,4 @@ pathlib
 python-dotenv
 beautifulsoup4
 requests
+selenium==3.8.0
