@@ -38,7 +38,6 @@ def default(default_event):
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_messages(mgs_event):
-
 	_id = mgs_event.source.user_id  # get user ID
 	profile = line_bot_api.get_profile(_id)  # get personal info
 	_name = profile.display_name  # storage user display name
@@ -94,7 +93,18 @@ def handle_messages(mgs_event):
 
 	msg = reply_messages()
 	# line_bot_api.reply_message(reply, TextSendMessage(text=msg))
-	line_bot_api.reply_message(reply, [TextSendMessage(text=msg), TextSendMessage(text=msg)])
+	line_bot_api.reply_message(
+			reply,
+			[
+				TextSendMessage(text='我現在複誦你的訊息'),
+				TextSendMessage(text='我現在複誦你的訊息'),
+				TextSendMessage(text='我現在複誦你的訊息'),
+				TextSendMessage(text='我現在複誦你的訊息'),
+				TextSendMessage(text='我現在複誦你的訊息'),
+				TextSendMessage(text=msg)
+			]
+	)
+
 
 # 基本回傳貼圖
 @handler.add(MessageEvent)
@@ -115,5 +125,5 @@ def followed(follow_event):
 
 	greet = f"It's good to meet you, my dear {_name}! "
 	line_bot_api.reply_message(
-		follow_event.reply_token, TextSendMessage(text=greet)
+			follow_event.reply_token, TextSendMessage(text=greet)
 	)
