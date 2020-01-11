@@ -5,10 +5,10 @@ from linebot.exceptions import InvalidSignatureError
 from linebot.models import *
 from bs4 import BeautifulSoup
 import requests
-import configs
+import ENV
 
-line_bot_api = LineBotApi(configs.CHANNEL_ACCESS_TOKEN)  #
-handler = WebhookHandler(configs.CHANNEL_SECRET)  #
+line_bot_api = LineBotApi(ENV.CHANNEL_ACCESS_TOKEN)  #
+handler = WebhookHandler(ENV.CHANNEL_SECRET)  #
 
 
 # Homepage
@@ -67,7 +67,7 @@ def handle_messages(mgs_event):
 				return _content
 			title = data.text
 			link = data['href']
-			_content += '{}\n{}\n\n'.format(title, link)
+			_content += f'{title}\n{link}\n\n'
 		return _content
 
 	def apple_news():
@@ -80,7 +80,7 @@ def handle_messages(mgs_event):
 			if _index == 5:
 				return _content
 			link = data['href']
-			_content += '{}\n\n'.format(link)
+			_content += f'{link}\n\n'
 		return _content
 
 	if user_msg == "新聞":
@@ -95,7 +95,7 @@ def handle_messages(mgs_event):
 	line_bot_api.reply_message(
 			reply,
 			[
-				TextSendMessage(text='現在複誦您的訊息'),
+
 				TextSendMessage(text=msg)
 			]
 	)
