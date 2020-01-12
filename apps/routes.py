@@ -189,10 +189,10 @@ def handle_messages(mgs_event):
 		line_bot_api.reply_message(reply, TextSendMessage(text=apple))
 
 	if user_msg == f'價格':
-		img_url, msg = selenium_crawler()
+		selenium = selenium_crawler()  # img_url,
 		line_bot_api.reply_message(reply, [
 
-				TextSendMessage(text=msg)
+				TextSendMessage(text=selenium)
 			]
 		)  # ImageSendMessage(base_url=img_url),
 
