@@ -3,12 +3,12 @@ from apps import main_app
 from linebot.exceptions import InvalidSignatureError
 from linebot import (LineBotApi, WebhookHandler)
 from linebot.models import *
-# from imgurpython import ImgurClient
+from imgurpython import ImgurClient
 import matplotlib.pyplot as plt
 from selenium import webdriver
 from bs4 import BeautifulSoup
 import requests
-# import pyimgur
+import pyimgur
 import time
 import ENV
 import re
@@ -21,7 +21,7 @@ client_id = ENV.CLIENT_ID
 client_secret = ENV.CLIENT_SECRET
 access_token = ENV.ACCESS_TOKEN
 refresh_token = ENV.REFRESH_TOKEN
-# client = ImgurClient(client_id, client_secret, access_token, refresh_token)
+client = ImgurClient(client_id, client_secret, access_token, refresh_token)
 
 
 # Chrome Options
@@ -147,29 +147,29 @@ def handle_messages(mgs_event):
 				if page_counter == 1: price += f'\n{_str}'
 			if page_counter > 1: break
 
-		# path = "my_fig.png"
-		#
-		# def img():
-		# 	plt.figure(figsize=(8.000, 6.000), dpi=100)
-		# 	plt.rcParams["axes.unicode_minus"] = False  # 正常顯示負數 plt.rcParams['font.sans-serif']=['SimHei']  # 正常顯示中文
-		# 	plt.xlabel(" Price (JPY) ", fontsize=14)
-		# 	plt.ylabel("counts", fontsize=14)
-		# 	plt.grid(axis='x', linestyle='-.')  # 畫格線
-		# 	plt.grid(axis='y', linestyle='-.')
-		# 	plt.xticks(fontsize=18)
-		# 	plt.yticks(fontsize=18)
-		# 	plt.hist(price_list, 15)  # n, bins, patches = plt.hist(price_list, 15)
-		# 	plt.title(f"  {item}  PriceTable", fontsize=24)
-		# 	plt.savefig('my_fig.png', dpi=80)  # 解析度
-		#
-		# 	# im = pyimgur.Imgur(client_id)
-		# 	uploaded_image = im.upload_image(path, title="Uploaded with PyImgur")
-		# 	return uploaded_image.link
+		path = "my_fig.png"
 
-		# _img_url = img()
+		def img():
+			plt.figure(figsize=(8.000, 6.000), dpi=100)
+			plt.rcParams["axes.unicode_minus"] = False  # 正常顯示負數 plt.rcParams['font.sans-serif']=['SimHei']  # 正常顯示中文
+			plt.xlabel(" Price (JPY) ", fontsize=14)
+			plt.ylabel("counts", fontsize=14)
+			plt.grid(axis='x', linestyle='-.')  # 畫格線
+			plt.grid(axis='y', linestyle='-.')
+			plt.xticks(fontsize=18)
+			plt.yticks(fontsize=18)
+			plt.hist(price_list, 15)  # n, bins, patches = plt.hist(price_list, 15)
+			plt.title(f"  {_item}  PriceTable", fontsize=24)
+			plt.savefig('my_fig.png', dpi=80)  # 解析度
+
+			im = pyimgur.Imgur(client_id)
+			uploaded_image = im.upload_image(path, title="Uploaded with PyImgur")
+			return uploaded_image.link
+
+		_img_url = img()
 		_selenium_msg = f"共找到 {ats} 項拍賣品，前20筆價格如下，{price}"
 		driver.close()
-		return _selenium_msg  # , _img_url
+		return _selenium_msg, _img_url  # , _img_url
 
 	if user_msg == "新聞":
 		content = tech_news()
@@ -180,12 +180,13 @@ def handle_messages(mgs_event):
 		line_bot_api.reply_message(reply, TextSendMessage(text=apple))
 
 	if match_obj:
-		selenium = selenium_crawler()  # img_url,
+		selenium, img_url = selenium_crawler()
 		line_bot_api.reply_message(reply, [
 
-				TextSendMessage(text=selenium)
+				TextSendMessage(text=selenium),
+				ImageSendMessage(original_content_url=img_url)
 			]
-		)  # ImageSendMessage(base_url=img_url),
+		)  # ImageSendMessage(base_url=img_url)
 
 	msg = reply_messages()
 	line_bot_api.reply_message(
