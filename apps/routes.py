@@ -11,6 +11,7 @@ import requests
 # import pyimgur
 import time
 import ENV
+import re
 
 # line bot
 line_bot_api = LineBotApi(ENV.CHANNEL_ACCESS_TOKEN)  #
@@ -67,6 +68,7 @@ def handle_messages(mgs_event):
 	_name = profile.display_name  # storage user display name
 	user_msg = mgs_event.message.text  # read text which user passed in
 	reply = mgs_event.reply_token
+	match_obj = re.match(r'(.*) 價格', user_msg, re.M | re.I)
 
 	def reply_messages():
 		greet_list = ['嗨', '你好', '哈囉', 'hi', 'hey', 'hello']
@@ -107,22 +109,11 @@ def handle_messages(mgs_event):
 
 	def selenium_crawler():
 
-		def enter():
-
-			while True:
-				_item = user_msg  # 'sony w810'
-				_item = _item.replace("%", "")
-				if user_msg != "":
-					break
-				else:
-					print('請重新輸入')
-					continue
-			_item = _item.replace("價格", "")
-			_url = f'https://www.letao.com.tw/yahoojp/auctions/history.php?category=0&p={_item}&seller='
-			return _url, _item
-
-		url, item = enter()
-		driver.get(url)
+		_item = user_msg  # 'sony w810'
+		_item = _item.replace("價格", "")
+		_item = _item.replace("%", "")
+		_url = f'https://www.letao.com.tw/yahoojp/auctions/history.php?category=0&p={_item}&seller='
+		driver.get(_url)
 		time.sleep(1)
 
 		amounts = driver.find_element_by_class_name("m2ItemPosVsCnt")
@@ -139,7 +130,7 @@ def handle_messages(mgs_event):
 			page_counter += 1
 			driver.find_element_by_xpath(
 				'/html/body/div[11]/div[2]/div/div[3]/span[*]/a[contains(@title,"下一頁")]').click()
-			url = driver.current_url
+			# url = driver.current_url
 			# html = requests.get(url).text
 			# soup = BeautifulSoup(html, 'html.parser')
 			# next_page = soup.find('a', title='下一頁')
@@ -176,7 +167,7 @@ def handle_messages(mgs_event):
 		# 	return uploaded_image.link
 
 		# _img_url = img()
-		_selenium_msg = f"共找到 {ats} 項拍賣品，價格如下，{price}"
+		_selenium_msg = f"共找到 {ats} 項拍賣品，前20筆價格如下，{price}"
 		driver.close()
 		return _selenium_msg  # , _img_url
 
@@ -188,7 +179,7 @@ def handle_messages(mgs_event):
 		apple = apple_news()
 		line_bot_api.reply_message(reply, TextSendMessage(text=apple))
 
-	if user_msg == user_msg:
+	if match_obj:
 		selenium = selenium_crawler()  # img_url,
 		line_bot_api.reply_message(reply, [
 
