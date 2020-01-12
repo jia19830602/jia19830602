@@ -158,7 +158,7 @@ def handle_messages(mgs_event):
 			plt.grid(axis='y', linestyle='-.')
 			plt.xticks(fontsize=18)
 			plt.yticks(fontsize=18)
-			plt.hist(price_list, 15)  # n, bins, patches = plt.hist(price_list, 15)
+			plt.hist(price_list, 15)
 			plt.title(f"  {_item}  PriceTable", fontsize=24)
 			plt.savefig('my_fig.png', dpi=80)  # 解析度
 
@@ -177,23 +177,27 @@ def handle_messages(mgs_event):
 
 	if user_msg == "蘋果新聞":
 		apple = apple_news()
-		line_bot_api.reply_message(reply, TextSendMessage(text=apple))
+		line_bot_api.reply_message(reply, [
+				ImageSendMessage(original_content_url='https://i.imgur.com/UQJADrB.png'),
+				TextSendMessage(text=apple)
+				]
+		)
 
 	if match_obj:
 		selenium, img_url = selenium_crawler()
 		line_bot_api.reply_message(reply, [
 
 				TextSendMessage(text=selenium),
-				ImageSendMessage(original_content_url='https://i.imgur.com/UQJADrB.png')
+
 			]
 		)  # ImageSendMessage(base_url=img_url)
 
 	msg = reply_messages()
 	line_bot_api.reply_message(
 			reply, [
+				TextSendMessage(text=msg),
 
-				ImageSendMessage(original_content_url='https://i.imgur.com/UQJADrB.png'
-				]  # TextSendMessage(text=msg),
+				]
 	)
 
 
