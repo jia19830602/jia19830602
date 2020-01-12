@@ -117,9 +117,8 @@ def handle_messages(mgs_event):
 				else:
 					print('請重新輸入')
 					continue
-
-			_url = f'https://www.letao.com.tw/yahoojp/auctions/history.php?category=0&p={_item}&seller='
 			_item = _item.replace("價格", "")
+			_url = f'https://www.letao.com.tw/yahoojp/auctions/history.php?category=0&p={_item}&seller='
 			return _url, _item
 
 		url, item = enter()
