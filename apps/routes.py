@@ -178,27 +178,17 @@ def handle_messages(mgs_event):
 	if user_msg == "蘋果新聞":
 		apple = apple_news()
 		line_bot_api.reply_message(reply, [
-				ImageSendMessage(original_content_url='https://i.imgur.com/UQJADrB.png'),
 				TextSendMessage(text=apple)
 				]
 		)
 
 	if match_obj:
 		selenium, img_url = selenium_crawler()
-		line_bot_api.reply_message(reply, [
-
-				TextSendMessage(text=selenium),
-
-			]
-		)  # ImageSendMessage(base_url=img_url)
+		message = [TextSendMessage(text=selenium), ImageSendMessage(original_content_url=img_url, preview_image_url=img_url)]
+		line_bot_api.reply_message(reply, message)  #
 
 	msg = reply_messages()
-	line_bot_api.reply_message(
-			reply, [
-				TextSendMessage(text=msg),
-
-				]
-	)
+	line_bot_api.reply_message(reply, [TextSendMessage(text=msg), ]	)
 
 
 # 基本回傳貼圖
