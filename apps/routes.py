@@ -110,7 +110,7 @@ def handle_messages(mgs_event):
 		def enter():
 
 			while True:
-				_item = 'sony w810'  # 'sony w810'
+				_item = user_msg  # 'sony w810'
 				_item = _item.replace("%", "")
 				if user_msg != "":
 					break
@@ -119,6 +119,7 @@ def handle_messages(mgs_event):
 					continue
 
 			_url = f'https://www.letao.com.tw/yahoojp/auctions/history.php?category=0&p={_item}&seller='
+			_item = _item.replace("價格", "")
 			return _url, _item
 
 		url, item = enter()
@@ -188,7 +189,7 @@ def handle_messages(mgs_event):
 		apple = apple_news()
 		line_bot_api.reply_message(reply, TextSendMessage(text=apple))
 
-	if user_msg == f'價格':
+	if user_msg == user_msg:
 		selenium = selenium_crawler()  # img_url,
 		line_bot_api.reply_message(reply, [
 
