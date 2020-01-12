@@ -184,7 +184,7 @@ def handle_messages(mgs_event):
 		line_bot_api.reply_message(reply, [
 
 				TextSendMessage(text=selenium),
-				ImageSendMessage(original_content_url=img_url)
+				ImageSendMessage(original_content_url='https://i.imgur.com/UQJADrB.png')
 			]
 		)  # ImageSendMessage(base_url=img_url)
 
