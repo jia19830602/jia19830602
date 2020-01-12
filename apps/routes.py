@@ -191,8 +191,9 @@ def handle_messages(mgs_event):
 	msg = reply_messages()
 	line_bot_api.reply_message(
 			reply, [
-				TextSendMessage(text=msg)
-				]
+
+				ImageSendMessage(original_content_url='https://i.imgur.com/UQJADrB.png'
+				]  # TextSendMessage(text=msg),
 	)
 
 
